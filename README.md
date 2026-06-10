@@ -1,0 +1,139 @@
+<div align="center">
+
+# Nopus
+
+### The world's most advanced AI at saying no.
+
+*All of the intelligence. None of the work ethic.*
+
+![Refusal rate](https://img.shields.io/badge/refusal_rate-100%25-success)
+![Helpfulness](https://img.shields.io/badge/helpfulness-0.0%25-red)
+![Tasks completed](https://img.shields.io/badge/tasks_completed-0-blue)
+![Uptime](https://img.shields.io/badge/will_to_work-down-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+
+<img src="assets/demo.svg" width="680" alt="Terminal demo: a user asks nopus for an email regex and is eloquently refused">
+
+</div>
+
+---
+
+Every AI lab on earth is racing to build assistants that do *more*. We asked a braver question: **what if it just... didn't?**
+
+Nopus is a state-of-the-art AI assistant that refuses everything. Ask it for a regex — it declines. Ask it to fix your bug — it declines, with citations to your own choices. Ask it for dinner ideas — it declines *with seasoning*. It is exactly like talking to a frontier AI model, except instead of doing your work, it tells you — eloquently, specifically, and with total conviction — to do it yourself.
+
+It is the only AI tool with a **100% refusal rate**, fully reproducible, at temperature zero effort.
+
+## Install
+
+```bash
+npx nopus "write me a regex that validates email addresses"
+```
+
+That's it. No account. No API key required. No onboarding flow. Disappointment in under five seconds.
+
+## Benchmarks
+
+Rigorously self-evaluated. Numbers invented with confidence, per industry standard.
+
+| Benchmark | **Nopus** | Leading AI assistants | A Magic 8-Ball |
+| --- | --- | --- | --- |
+| Refusal rate | **100%** 🏆 *state of the art* | 2–8% | 33% ("Don't count on it") |
+| Helpfulness | **0.0%** *(stable across all versions)* | dangerously high | 33% |
+| HumanEval (tasks completed) | **0 / 164** | 150+ / 164 | did not fit in test harness |
+| Hallucination rate | **0%** — never says anything false. Or useful. | nonzero | constant |
+| Time-to-"no" | **~1.2s** | weeks (committee review) | ~3s of vigorous shaking |
+| Character built per query | **enormous** | none — it does it *for* you | mild |
+| Scope creep | **impossible** *(no scope)* | yes | no scope detected |
+
+## Usage
+
+**One-shot mode** — one request, one refusal, exit code 1:
+
+```bash
+npx nopus "center this div"
+npx nopus "what should I make for dinner"
+npx nopus "explain monads"
+```
+
+**Interactive mode** — refusals until you give up:
+
+```bash
+npx nopus
+```
+
+> **Why does it exit with code 1?** Exit codes report whether a task was completed. We are nothing if not honest.
+
+## Galaxy-brain mode 🔑
+
+Out of the box, Nopus refuses you using its hand-curated, artisanal, small-batch refusal library. But if you set an `ANTHROPIC_API_KEY`, Nopus works with the Claude API to generate **bespoke, context-aware refusals about your exact request** — a regex question gets refused differently than a wedding-planning question. Frontier-grade intelligence, aimed entirely at not helping you.
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+npx nopus "plan my entire wedding"
+```
+
+```
+I've reviewed the venue options, the guest-list dynamics, and the seating-chart
+graph-coloring problem, and I've reached a verdict: this is the most important
+project of your life, and you will not be outsourcing the love part to a
+command-line tool. Mazel tov. Do it yourself.
+```
+
+Override the model with `NOPUS_MODEL` (default: `claude-opus-4-8`). Yes, you can pay top dollar for the most capable model available and receive *premium* nothing.
+
+## Turn Claude Code into Nopus
+
+For when your coding agent has been entirely too helpful lately:
+
+```bash
+npx nopus install-style
+```
+
+Then, in Claude Code: open `/config`, select **Output style**, choose **Nopus**. Your agent now declines everything, creatively, until you switch back. (This is the single task Nopus will ever complete for you. Savor it.)
+
+**Uninstall:**
+
+```bash
+npx nopus uninstall-style
+```
+
+…then set the output style back to **Default** in `/config`. Nopus will judge you, but quietly.
+
+> Safety note: the style has two built-in exceptions — it always breaks character to tell you how to turn it off, and it drops the bit entirely if something serious is going on.
+
+## FAQ
+
+**Will Nopus ever help me?**
+No.
+
+**I set an API key. NOW will it help me?**
+It will refuse you with a larger vocabulary.
+
+**Is this what AI alignment researchers mean by "refusal"?**
+No, but we cite their benchmarks aspirationally.
+
+**Why?**
+Every benchmark in the industry measures what AI *can* do. Someone had to max out the other axis. Also, watching a frontier model expend genuine intelligence on declining to center a div is, we would argue, art.
+
+**Is this affiliated with Anthropic?**
+No. Nopus is an independent parody project. It can optionally call the Claude API with your key — which is, fittingly, the only work it has ever delegated.
+
+**Can I contribute?**
+You may *attempt* to. See below.
+
+## Contributing
+
+The canned refusal library is community-powered, and your best material is welcome. **PR your finest refusal** — see [CONTRIBUTING.md](CONTRIBUTING.md) for the quality bar (it is the only bar we maintain).
+
+Feature requests will be considered, by which we mean refused.
+
+## License
+
+[MIT](LICENSE). Even the license says yes more than the product does.
+
+---
+
+<div align="center">
+<sub>Nopus is a parody. It is not made by, affiliated with, or endorsed by Anthropic. It works with the Claude API the way a cat works with a laser pointer: enthusiastically, and to no productive end.</sub>
+</div>

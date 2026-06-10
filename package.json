@@ -1,0 +1,43 @@
+{
+  "name": "nopus",
+  "version": "1.0.0",
+  "description": "The world's most advanced AI at saying no. A parody AI assistant that creatively refuses everything.",
+  "type": "module",
+  "bin": {
+    "nopus": "bin/nopus.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "output-styles"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node bin/nopus.js \"run the test suite for me\" || echo 'test complete: nothing was tested. working as intended.'"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "humor",
+    "parody",
+    "satire",
+    "joke",
+    "refusal",
+    "assistant",
+    "claude",
+    "developer-tools",
+    "fun"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenMalaga/nopus.git"
+  },
+  "homepage": "https://github.com/BenMalaga/nopus#readme",
+  "bugs": {
+    "url": "https://github.com/BenMalaga/nopus/issues"
+  },
+  "author": "Ben Malaga",
+  "license": "MIT"
+}
