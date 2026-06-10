@@ -1,6 +1,6 @@
 {
   "name": "nopus-cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "The world's most advanced AI at saying no. A parody AI assistant that creatively refuses everything.",
   "type": "module",
   "bin": {

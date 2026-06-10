@@ -147,6 +147,26 @@ async function think() {
   stdout.write("\r\x1b[2K");
 }
 
+// Word-aware wrapping so refusals never break mid-word at the terminal edge.
+// Continuation lines indent to align under the text after the ⊘ prefix.
+function wrapText(text, prefixLen) {
+  const cols = Math.min(stdout.columns || 80, 100);
+  const width = Math.max(20, cols - prefixLen - 1);
+  const indent = " ".repeat(prefixLen);
+  const lines = [];
+  let line = "";
+  for (const word of text.split(" ")) {
+    if (line && line.length + 1 + word.length > width) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = line ? `${line} ${word}` : word;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.join(`\n${indent}`);
+}
+
 // Typewriter pacing, overridable via NOPUS_TYPE_MS (0 disables the effect —
 // for the impatient, screen readers, and demo recordings).
 function typeDelay() {
@@ -186,7 +206,8 @@ async function respond(prompt, history, roast, mode) {
 
   refusalCount++;
   const prefix = isTTY ? `${paint(C.coral, MARK)} ` : "";
-  await typeOut(text, prefix);
+  const display = isTTY ? wrapText(text, 2) : text;
+  await typeOut(display, prefix);
 
   if (isTTY) {
     const secs = ((Date.now() - start) / 1000).toFixed(1);
