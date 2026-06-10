@@ -94,15 +94,23 @@ async function think() {
   }
 }
 
+// Typewriter pacing, overridable via NOPUS_TYPE_MS (0 disables the effect —
+// for the impatient, screen readers, and demo recordings).
+function typeDelay() {
+  const parsed = Number(env.NOPUS_TYPE_MS);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 12;
+}
+
 async function typeOut(text, prefix = "") {
-  if (!isTTY) {
+  const delay = typeDelay();
+  if (!isTTY || delay === 0) {
     stdout.write(prefix + text + "\n");
     return;
   }
   stdout.write(prefix);
   for (const ch of text) {
     stdout.write(ch);
-    await sleep(12);
+    await sleep(delay);
   }
   stdout.write("\n");
 }
