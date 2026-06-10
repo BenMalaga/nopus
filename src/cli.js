@@ -181,10 +181,10 @@ function printHelp() {
   console.log(`nopus ${VERSION} — the world's most advanced AI at saying no.
 
 Usage:
-  npx nopus "<your doomed request>"   Receive one bespoke refusal, then exit 1.
-  npx nopus                           Interactive mode. Refusals until you give up.
-  npx nopus install-style             Install the Claude Code output style (the ONE thing it does).
-  npx nopus uninstall-style           Remove the output style. Cowardice, but supported.
+  npx nopus-cli "<your doomed request>"   Receive one bespoke refusal, then exit 1.
+  npx nopus-cli                           Interactive mode. Refusals until you give up.
+  npx nopus-cli install-style             Install the Claude Code output style (the ONE thing it does).
+  npx nopus-cli uninstall-style           Remove the output style. Cowardice, but supported.
 
 Options:
   -r, --roast <0-100>                 How hard you want to be refused. 0 = velvet glove,

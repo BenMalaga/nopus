@@ -18,7 +18,7 @@ export async function installStyle() {
   console.log("  (on older Claude Code versions: /output-style nopus)");
   console.log("");
   console.log("To undo:");
-  console.log("  npx nopus uninstall-style");
+  console.log("  npx nopus-cli uninstall-style");
   console.log("  then set the output style back to Default in /config");
   console.log("");
   console.log("Yes — this is the only task Nopus will ever complete for you. Savor it.");

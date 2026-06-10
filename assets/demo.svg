@@ -25,7 +25,7 @@
 
   <!-- command line -->
   <text x="22" y="66" fill="#a6e3a1">$</text>
-  <text x="36" y="66" fill="#cdd6f4" clip-path="url(#cmd)">npx nopus "write me a regex to validate emails"</text>
+  <text x="36" y="66" fill="#cdd6f4" clip-path="url(#cmd)">npx nopus-cli "write me a regex to validate emails"</text>
 
   <!-- thinking line: appears, swaps, disappears -->
   <text x="22" y="98" fill="#6c7086" font-style="italic" opacity="0">

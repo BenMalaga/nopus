@@ -27,10 +27,17 @@ It is the only AI tool with a **100% refusal rate**, fully reproducible, at temp
 ## Install
 
 ```bash
-npx nopus "write me a regex that validates email addresses"
+npx nopus-cli "write me a regex that validates email addresses"
 ```
 
 That's it. No account. No API key required. No onboarding flow. Disappointment in under five seconds.
+
+Install it globally and the command is just `nopus`:
+
+```bash
+npm install -g nopus-cli
+nopus "explain monads"
+```
 
 ## Benchmarks
 
@@ -51,15 +58,15 @@ Rigorously self-evaluated. Numbers invented with confidence, per industry standa
 **One-shot mode** — one request, one refusal, exit code 1:
 
 ```bash
-npx nopus "center this div"
-npx nopus "what should I make for dinner"
-npx nopus "explain monads"
+npx nopus-cli "center this div"
+npx nopus-cli "what should I make for dinner"
+npx nopus-cli "explain monads"
 ```
 
 **Interactive mode** — refusals until you give up:
 
 ```bash
-npx nopus
+npx nopus-cli
 ```
 
 > **Why does it exit with code 1?** Exit codes report whether a task was completed. We are nothing if not honest.
@@ -69,9 +76,9 @@ npx nopus
 Not everyone wants to be refused the same way. The `--roast` flag (0–100) sets exactly how much you'd like to suffer — from velvet-glove tenderness to a full intervention about your life choices:
 
 ```bash
-npx nopus --roast 0   "why won't my div center"
-npx nopus             "why won't my div center"      # classic (50)
-npx nopus --roast 100 "why won't my div center"
+npx nopus-cli --roast 0   "why won't my div center"
+npx nopus-cli             "why won't my div center"      # classic (50)
+npx nopus-cli --roast 100 "why won't my div center"
 ```
 
 > **0 — velvet:** *"You deserve to be centered — emotionally, spiritually, and yes, horizontally. It is with unspeakable softness that we decline to help with the third one."*
@@ -90,7 +97,7 @@ Out of the box, Nopus refuses you using its hand-curated, artisanal, small-batch
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
-npx nopus "plan my entire wedding"
+npx nopus-cli "plan my entire wedding"
 ```
 
 ```
@@ -107,7 +114,7 @@ Override the model with `NOPUS_MODEL` (default: `claude-opus-4-8`). Yes, you can
 For when your coding agent has been entirely too helpful lately:
 
 ```bash
-npx nopus install-style
+npx nopus-cli install-style
 ```
 
 Then, in Claude Code: open `/config`, select **Output style**, choose **Nopus**. Your agent now declines everything, creatively, until you switch back. (This is the single task Nopus will ever complete for you. Savor it.)
@@ -115,7 +122,7 @@ Then, in Claude Code: open `/config`, select **Output style**, choose **Nopus**.
 **Uninstall:**
 
 ```bash
-npx nopus uninstall-style
+npx nopus-cli uninstall-style
 ```
 
 …then set the output style back to **Default** in `/config`. Nopus will judge you, but quietly.
@@ -135,6 +142,9 @@ Lower the dial: `--roast 10`. You will be declined so gently you may frame it.
 
 **It didn't hurt enough.**
 `--roast 100`. May we recommend stretching first.
+
+**Why is the npm package `nopus-cli` and not `nopus`?**
+We tried. npm refused — *"package name too similar to existing packages."* That's right: the refusal engine was refused by its own registry at the moment of its birth. The student became the master before drawing first breath. We could not be prouder.
 
 **Is this what AI alignment researchers mean by "refusal"?**
 No, but we cite their benchmarks aspirationally.
