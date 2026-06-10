@@ -64,9 +64,29 @@ npx nopus
 
 > **Why does it exit with code 1?** Exit codes report whether a task was completed. We are nothing if not honest.
 
+## The roast dial 🎚️
+
+Not everyone wants to be refused the same way. The `--roast` flag (0–100) sets exactly how much you'd like to suffer — from velvet-glove tenderness to a full intervention about your life choices:
+
+```bash
+npx nopus --roast 0   "why won't my div center"
+npx nopus             "why won't my div center"      # classic (50)
+npx nopus --roast 100 "why won't my div center"
+```
+
+> **0 — velvet:** *"You deserve to be centered — emotionally, spiritually, and yes, horizontally. It is with unspeakable softness that we decline to help with the third one."*
+>
+> **50 — classic:** *"Before one can center a div, one must first center oneself. I can help with neither."*
+>
+> **100 — scorched earth:** *"Forty minutes staring at a box that refuses to center, and your big play was asking the professional refusal machine? Get back out there — the box can sense fear."*
+
+Presets, if numbers feel like math (we don't do math): `--roast velvet | polite | classic | roast | scorched`. Set a standing preference with `NOPUS_ROAST=80`. In interactive mode, turn the dial mid-conversation with `/roast 95` — for when the refusals aren't hurting enough.
+
+The rules hold at every temperature: clean, and aimed at the request and the act of asking — scorched earth roasts you like a close friend, not like a stranger online.
+
 ## Galaxy-brain mode 🔑
 
-Out of the box, Nopus refuses you using its hand-curated, artisanal, small-batch refusal library. But if you set an `ANTHROPIC_API_KEY`, Nopus works with the Claude API to generate **bespoke, context-aware refusals about your exact request** — a regex question gets refused differently than a wedding-planning question. Frontier-grade intelligence, aimed entirely at not helping you.
+Out of the box, Nopus refuses you using its hand-curated, artisanal, small-batch library of **150+ refusals** across 15 categories and 3 heat tiers. But if you set an `ANTHROPIC_API_KEY`, Nopus works with the Claude API to generate **bespoke, context-aware refusals about your exact request** — a regex question gets refused differently than a wedding-planning question. Frontier-grade intelligence, aimed entirely at not helping you.
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
@@ -109,6 +129,12 @@ No.
 
 **I set an API key. NOW will it help me?**
 It will refuse you with a larger vocabulary.
+
+**It hurt my feelings.**
+Lower the dial: `--roast 10`. You will be declined so gently you may frame it.
+
+**It didn't hurt enough.**
+`--roast 100`. May we recommend stretching first.
 
 **Is this what AI alignment researchers mean by "refusal"?**
 No, but we cite their benchmarks aspirationally.

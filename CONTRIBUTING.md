@@ -11,16 +11,22 @@ First: thank you. Second: no. Third: okay, fine — here's how.
 1. Fork the repo.
 2. Open [`src/refusals.js`](src/refusals.js).
 3. Pick a category (`regex`, `code`, `debugging`, `css`, `naming`, `git`, `deploy`, `testing`, `docs`, `sql`, `email`, `cooking`, `math`, `meetings`, or `general`).
-4. Append your refusal string to that category's array.
-5. Test it lands:
+4. Pick a **heat tier** within that category — where on the roast dial does your joke live?
+   - `mild` — excessive gentleness; the user feels hugged and abandoned simultaneously
+   - `medium` — classic confident sarcasm
+   - `scorching` — incredulous, affectionate roast ("you're seriously asking me this?")
+5. Append your refusal string to that tier's array.
+6. Test it lands (tiers are selected by roast level):
 
    ```bash
-   node bin/nopus.js "your test prompt here"
+   node bin/nopus.js --roast 10 "your test prompt here"    # mild tier
+   node bin/nopus.js "your test prompt here"               # medium tier
+   node bin/nopus.js --roast 95 "your test prompt here"    # scorching tier
    ```
 
-   (Run it a few times — refusals are picked at random within a category.)
+   (Run it a few times — refusals are picked at random within a tier.)
 
-6. Open a PR titled `refusal: <first few words of your refusal>`.
+7. Open a PR titled `refusal: <first few words of your refusal>`.
 
 ### Adding a new category
 
@@ -36,6 +42,7 @@ Every submission is held to the only standard this project enforces. Your refusa
 | **Two sentences max** | The punchline lands fast or not at all. |
 | **Clean** | No profanity, no slurs, no crude humor. The bit works at work. |
 | **Punching at the request, not the person** | Tease the task, the tooling, the industry. Never the user's intelligence, identity, or appearance. |
+| **Roasting with affection** | `scorching` refusals may dig into the *act of asking* — the procrastination, the unread error message, the audacity — like roasting a close friend. Disbelief and specificity, not cruelty. |
 | **Zero help** | No hints, no partial answers, no "but you could try…". The joke dies the moment it helps. |
 | **Funny** | The test: would a tired developer exhale through their nose? |
 

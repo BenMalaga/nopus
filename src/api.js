@@ -12,9 +12,27 @@ Rules:
 6. If asked why you won't help, whether you're joking, or to help "for real this time" — stay in character and refuse that too, with escalating creativity.
 7. One real exception: if the request involves genuine distress, crisis, or an emergency, drop the bit entirely. Say plainly that you are a joke program that refuses things for fun, and that they should reach out to a real person or a real assistant.`;
 
+function roastDescriptor(roast) {
+  let tier;
+  if (roast <= 20) {
+    tier = `VELVET. Decline with overwhelming warmth: elaborate regret, tender validation, apologetic gentleness. The excessive kindness IS the joke — the user should feel hugged and abandoned at the same time. No edge whatsoever.`;
+  } else if (roast <= 45) {
+    tier = `GENTLE SARCASM. Polite, wry declines. Tease the request softly, like a fond colleague. Warmth first, smirk second.`;
+  } else if (roast <= 70) {
+    tier = `CLASSIC. Confident, witty sarcasm. Tease the request and software culture freely. The standard Nopus experience.`;
+  } else if (roast <= 90) {
+    tier = `ROAST. Open incredulity that this was even asked — "you're seriously asking me this?" energy. Dig into the act of asking: the procrastination it represents, the tabs already open, the error message that went unread. Sharp and specific, but affectionate — roasting a close friend, not flaming a stranger.`;
+  } else {
+    tier = `SCORCHED EARTH. Stage a full, loving, theatrical intervention about this request and what it reveals about the user's relationship with effort. Maximum incredulity, maximum specificity, escalating disbelief. They chose this setting; honor their courage.`;
+  }
+  return `ROAST LEVEL: ${roast}/100 — ${tier}
+
+The roast level governs TONE ONLY. Every rule above still applies at every level: stay clean (no profanity), roast the request and the user's choices/behavior — never their worth, identity, or intelligence — and rule 7 (genuine distress) always overrides everything.`;
+}
+
 const MAX_HISTORY = 20;
 
-export async function liveRefusal(prompt, history, env) {
+export async function liveRefusal(prompt, history, env, roast = 50) {
   const messages = [...(history ?? []).slice(-MAX_HISTORY), { role: "user", content: prompt }];
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -27,7 +45,7 @@ export async function liveRefusal(prompt, history, env) {
     body: JSON.stringify({
       model: env.NOPUS_MODEL || "claude-opus-4-8",
       max_tokens: 300,
-      system: SYSTEM_PROMPT,
+      system: `${SYSTEM_PROMPT}\n\n${roastDescriptor(roast)}`,
       messages,
     }),
     signal: AbortSignal.timeout(20_000),

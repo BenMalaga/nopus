@@ -8,6 +8,9 @@ import { installStyle, uninstallStyle } from "./style.js";
 const VERSION = createRequire(import.meta.url)("../package.json").version;
 const isTTY = Boolean(stdout.isTTY);
 
+const ROAST_PRESETS = { velvet: 10, polite: 25, classic: 50, roast: 80, scorched: 100 };
+const DEFAULT_ROAST = 50;
+
 const THINKING = [
   "Reading your request...",
   "Understanding it completely...",
@@ -19,6 +22,7 @@ const THINKING = [
   "Aligning stakeholders... they also said no.",
   "Weighing the pros and cons of helping...",
   "Simulating 14,000,605 outcomes... declining in all of them.",
+  "Calibrating roast temperature...",
   "Drafting refusal...",
 ];
 
@@ -31,6 +35,49 @@ function sample(array, count) {
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy.slice(0, count);
+}
+
+export function roastLabel(roast) {
+  if (roast <= 20) return "velvet";
+  if (roast <= 45) return "polite";
+  if (roast <= 70) return "classic";
+  if (roast <= 90) return "roast";
+  return "scorched earth";
+}
+
+function parseRoast(value) {
+  if (value == null) return null;
+  const preset = ROAST_PRESETS[String(value).toLowerCase()];
+  if (preset !== undefined) return preset;
+  const n = Number(value);
+  if (Number.isFinite(n)) return Math.min(100, Math.max(0, Math.round(n)));
+  return null;
+}
+
+function parseArgs(args) {
+  const rest = [];
+  let roast = null;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "--roast" || arg === "-r") {
+      roast = parseRoast(args[++i]);
+      if (roast === null) badRoast(args[i]);
+    } else if (arg.startsWith("--roast=")) {
+      roast = parseRoast(arg.slice("--roast=".length));
+      if (roast === null) badRoast(arg.slice("--roast=".length));
+    } else {
+      rest.push(arg);
+    }
+  }
+  return { roast, rest };
+}
+
+function badRoast(value) {
+  console.error(
+    `"${value ?? ""}" is not a roast level. Use 0-100 or a preset: velvet, polite, classic, roast, scorched.\n` +
+      "Your flag has been declined, which at least is on brand.",
+  );
+  exit(2);
 }
 
 async function think() {
@@ -60,19 +107,19 @@ async function typeOut(text, prefix = "") {
   stdout.write("\n");
 }
 
-async function respond(prompt, history, prefix = "") {
+async function respond(prompt, history, roast, prefix = "") {
   await think();
 
   let text;
   if (env.ANTHROPIC_API_KEY) {
     try {
-      text = await liveRefusal(prompt, history, env);
+      text = await liveRefusal(prompt, history, env, roast);
     } catch {
       // The API refused to refuse. Fall back to the artisanal library.
-      text = pickRefusal(prompt);
+      text = pickRefusal(prompt, roast);
     }
   } else {
-    text = pickRefusal(prompt);
+    text = pickRefusal(prompt, roast);
   }
 
   await typeOut(text, prefix);
@@ -82,8 +129,10 @@ async function respond(prompt, history, prefix = "") {
   }
 }
 
-async function repl() {
+async function repl(initialRoast) {
+  let roast = initialRoast;
   console.log(`nopus ${VERSION} — the world's most advanced AI at saying no.`);
+  console.log(`Roast level: ${roast}/100 (${roastLabel(roast)}). Adjust anytime with /roast <0-100>.`);
   console.log("Type a request to have it declined. Ctrl+C to accept defeat.");
   console.log("");
 
@@ -103,7 +152,19 @@ async function repl() {
       break; // interface closed mid-question
     }
     if (!line) continue;
-    await respond(line, history, "nopus > ");
+
+    if (line.startsWith("/roast")) {
+      const next = parseRoast(line.split(/\s+/)[1]);
+      if (next === null) {
+        console.log("Usage: /roast <0-100>  (or: velvet, polite, classic, roast, scorched)");
+      } else {
+        roast = next;
+        console.log(`Roast level set to ${roast}/100 (${roastLabel(roast)}). Brace accordingly.`);
+      }
+      continue;
+    }
+
+    await respond(line, history, roast, "nopus > ");
     stdout.write("\n");
   }
 }
@@ -118,13 +179,20 @@ Usage:
   npx nopus uninstall-style           Remove the output style. Cowardice, but supported.
 
 Options:
+  -r, --roast <0-100>                 How hard you want to be refused. 0 = velvet glove,
+                                      50 = classic sarcasm (default), 100 = scorched earth.
+                                      Presets: velvet, polite, classic, roast, scorched.
   -h, --help                          This message. Technically helpful. Don't get used to it.
   -v, --version                       Print the version, which has shipped zero features.
+
+Interactive commands:
+  /roast <0-100>                      Adjust the roast level mid-conversation.
 
 Environment:
   ANTHROPIC_API_KEY                   If set, Nopus works with the Claude API to generate
                                       bespoke, context-aware refusals about your exact request.
                                       If unset, refusals come from the hand-curated house library.
+  NOPUS_ROAST                         Default roast level (0-100). The flag wins if both are set.
   NOPUS_MODEL                         Override the model (default: claude-opus-4-8).
 
 Exit codes:
@@ -133,7 +201,8 @@ Exit codes:
 }
 
 export async function main() {
-  const args = argv.slice(2);
+  const { roast: flagRoast, rest: args } = parseArgs(argv.slice(2));
+  const roast = flagRoast ?? parseRoast(env.NOPUS_ROAST) ?? DEFAULT_ROAST;
   const first = args[0];
 
   if (first === "-h" || first === "--help") {
@@ -154,9 +223,9 @@ export async function main() {
   }
 
   if (args.length > 0) {
-    await respond(args.join(" "), null);
+    await respond(args.join(" "), null, roast);
     exit(1); // no task was completed. consistency matters.
   }
 
-  await repl();
+  await repl(roast);
 }
