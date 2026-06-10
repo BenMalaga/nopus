@@ -6,6 +6,7 @@
 
 *All of the intelligence. None of the work ethic.*
 
+[![npm](https://img.shields.io/npm/v/nopus-cli?color=cb3837&label=npm)](https://www.npmjs.com/package/nopus-cli)
 ![Refusal rate](https://img.shields.io/badge/refusal_rate-100%25-success)
 ![Helpfulness](https://img.shields.io/badge/helpfulness-0.0%25-red)
 ![Tasks completed](https://img.shields.io/badge/tasks_completed-0-blue)
