@@ -12,7 +12,7 @@
 ![Uptime](https://img.shields.io/badge/will_to_work-down-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
-<img src="assets/demo.svg" width="680" alt="Terminal demo: a user asks nopus for an email regex and is eloquently refused">
+<img src="assets/demo.gif" width="680" alt="Terminal demo: an interactive nopus session where a div-centering question is refused gently, the roast dial is turned to 100, and the same question is refused with extreme prejudice">
 
 </div>
 
